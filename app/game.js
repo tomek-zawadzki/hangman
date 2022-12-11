@@ -33,7 +33,8 @@ class Game {
   }
 
   guess(letter) {
-    console.log(letter);
+    this.quote.guess(letter);
+    this.drawQuuote();
   }
 
   drawLetters() {
@@ -46,10 +47,14 @@ class Game {
     }
   }
 
-  start() {
-    this.drawLetters();
+  drawQuuote() {
     const content = this.quote.getContent();
     this.wordWrapper.innerHTML = content;
+  }
+
+  start() {
+    this.drawLetters();
+    this.drawQuuote();
   }
 }
 

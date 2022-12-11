@@ -1,6 +1,9 @@
 import { Quote } from "./quote.js";
 
 class Game {
+  currentStep = 0;
+  lastStep = 8;
+
   quotes = [
     {
       text: "pan tadeusz",
@@ -32,9 +35,16 @@ class Game {
     this.quote = new Quote(text);
   }
 
-  guess(letter) {
-    this.quote.guess(letter);
-    this.drawQuuote();
+  guess(letter, event) {
+    event.target.disabled = true;
+    if (this.quote.guess(letter)) {
+      this.drawQuuote();
+    } else {
+      this.currentStep++;
+      document.getElementsByClassName("step")[
+        this.currentStep
+      ].style.opacity = 1;
+    }
   }
 
   drawLetters() {
@@ -42,7 +52,7 @@ class Game {
       const label = (i + 10).toString(36);
       const button = document.createElement("button");
       button.innerHTML = label;
-      button.addEventListener("click", () => this.guess(label));
+      button.addEventListener("click", (event) => this.guess(label, event));
       this.lettersWrapper.appendChild(button);
     }
   }
@@ -53,6 +63,7 @@ class Game {
   }
 
   start() {
+    document.getElementsByClassName("step")[this.currentStep].style.opacity = 1;
     this.drawLetters();
     this.drawQuuote();
   }
